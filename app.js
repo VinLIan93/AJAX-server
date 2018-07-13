@@ -6,6 +6,12 @@ let deviceData = require('./src/DevicesSimulation/homePage/querySimulativeDevice
 
 let transmission = require('./src/DevicesSimulation/homePage/deviceSendReceiveInfo.js')
 //console.log(transmission.ftn.sends());
+
+let deviceOptions = require('./src/DevicesSimulation/homePage/deviceOptions.js')
+//console.log(deviceOptions)
+
+let deviceSetOptions = require('./src/DevicesSimulation/devicesetpage/getNewDeviceIDAndOptions.js')
+
 //设置跨域访问
 app.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Origin', 'http://10.10.11.55:3200');
@@ -32,28 +38,63 @@ var questions=[
 ];
 
 //测试接口
-app.get("/123", function(req, res){
+app.post("/123", function(req, res){
     res.status(200)
     res.json(questions)
 })
 
-app.post("/homePage/querySimulativeDevices.do", function(reg, res){
+app.post("/homePage/querySimulativeDevices", function(reg, res){
     res.status(200)
     res.json(deviceData.deviceLists)
 })
 
-app.get("/homePage/showSendInfo.do", function(reg, res){
+app.post("/homePage/showSendInfo", function(reg, res){
     res.status(200)
     res.json(transmission.ftn.sends())
     
     //res.json([]);
 })
 
-app.get("/homePage/showReceiveInfo.do", function(reg, res){
+app.post("/homePage/showReceiveInfo", function(reg, res){
     res.status(200)
     res.json(transmission.ftn.receives())
     
     //res.json([]);
+})
+
+app.post("/deviceSetPage/getDeviceType", function(reg, res){
+    let data =deviceOptions.deviceOptions.typeOptions;
+    res.status(200)
+    res.json(data)
+})
+
+app.post("/deviceSetPage/getApplianceType", function(reg, res){
+    let data =deviceOptions.deviceOptions.applianceOptions;
+    res.status(200)
+    res.json(data)
+})
+
+app.post("/deviceSetPage/getEnvironmentType", function(reg, res){
+    let data =deviceOptions.deviceOptions.environmentOptions;
+    //console.log(deviceOptions);
+    res.status(200)
+    res.json(data)
+})
+
+app.post("/deviceSetPage/getNewDeviceIDAndOptions", function(reg,res){
+    res.status(200)
+    res.json(deviceSetOptions.res)
+})
+
+app.post("/deviceSetPage/getDeviceSetOptions", function(reg,res){
+    res.status(200)
+    res.json(deviceSetOptions.res)
+})
+
+app.post("/deviceSetPage/setDeviceOptions", function(reg,res) {
+    console.log(reg)
+    res.status(200)
+    res.json({result:'successed'})
 })
 
 //配置服务端口
