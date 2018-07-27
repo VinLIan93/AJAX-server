@@ -12,6 +12,8 @@ let deviceOptions = require('./src/DevicesSimulation/homePage/deviceOptions.js')
 
 let deviceSetOptions = require('./src/DevicesSimulation/devicesetpage/getNewDeviceIDAndOptions.js')
 
+let AssDevices = require('./src/DevicesSimulation/associationPage/associationDevices.js');
+
 //设置跨域访问
 app.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Origin', 'http://10.10.11.55:3200');
@@ -92,9 +94,14 @@ app.post("/deviceSetPage/getDeviceSetOptions", function(reg,res){
 })
 
 app.post("/deviceSetPage/setDeviceOptions", function(reg,res) {
-    console.log(reg)
+    //console.log(reg)
     res.status(200)
     res.json({result:'successed'})
+})
+
+app.post("/associationPage/getAssociatedDevices", function(reg,res) {
+    res.status(200)
+    res.json(AssDevices)
 })
 
 //配置服务端口
